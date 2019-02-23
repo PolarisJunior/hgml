@@ -17,17 +17,21 @@ class OlsRegression(Regression):
         self.coefficients = np.linalg.solve(x.transpose() @ x, x.transpose() @ y)
         pass
 
-
 if __name__ == "__main__":
+    from evaluate.metrics import *
     from mnist import MNIST
     mndata = MNIST("./data")
     training, labels_train = map(np.array, mndata.load_training())
     training = training / 255.0
     testing, labels_test = map(np.array, mndata.load_testing())
     testing = testing / 255.0
+    labels_train = one_hot_encoding(labels_train)
+    labels_test = one_hot_encoding(labels_test)
     
     model = OlsRegression()
     model.train(training, labels_train)
-    # print(model)
+    predictions = model.predict(testing)
+    print(get_accuracy_one_hot(predictions, labels_test))
+
     
     

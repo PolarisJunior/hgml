@@ -22,6 +22,17 @@ def perturb(arr, inplace=True, sigma=0.00001):
     else:
         return arr + sigma * np.random.randn(*arr.shape)
 
+def one_hot_encoding(vec, dimensions=None):
+    """ Converts a list of integer values to
+        a one hot encoding """
+    if dimensions is None:
+        dimensions = np.max(vec) + 1
+    
+    encoded = np.zeros((len(vec), dimensions))
+    encoded[np.arange(len(vec)), vec] = 1
+    return encoded
+    pass
+
 def demean():
     pass
 
