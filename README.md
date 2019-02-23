@@ -1,1 +1,1 @@
-# homegrown-ml
+# Homegrown machine learning library
