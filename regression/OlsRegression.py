@@ -3,7 +3,9 @@
  """
 import numpy as np
 from util.data_manip import *
+from util.test_data import get_mnist_data
 from regression.Regression import Regression
+
 
 class OlsRegression(Regression):
     """ Solve the equation (X^TX)^-1X^Ty=w """
@@ -19,19 +21,19 @@ class OlsRegression(Regression):
 
 if __name__ == "__main__":
     from evaluate.metrics import *
-    from mnist import MNIST
-    mndata = MNIST("./data")
-    training, labels_train = map(np.array, mndata.load_training())
-    training = training / 255.0
-    testing, labels_test = map(np.array, mndata.load_testing())
-    testing = testing / 255.0
+    training, labels_train, testing, labels_test = get_mnist_data()
     labels_train = one_hot_encoding(labels_train)
     labels_test = one_hot_encoding(labels_test)
     
     model = OlsRegression()
     model.train(training, labels_train)
+    
+    predictions = model.predict(training)
+    print("accuracy on training %s" % get_accuracy_one_hot(predictions, labels_train))
+
     predictions = model.predict(testing)
-    print(get_accuracy_one_hot(predictions, labels_test))
+    print("accuracy on testing %s" % get_accuracy_one_hot(predictions, labels_test))
+    
 
     
     

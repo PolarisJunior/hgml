@@ -14,6 +14,7 @@ def add_intercept_column(matrix):
     pass
 
 def perturb(arr, inplace=True, sigma=0.00001):
+    """ Adds small gaussian noise to an array """
     assert(isinstance(arr, np.ndarray))
 
     if inplace:
@@ -38,6 +39,8 @@ def demean():
 
 if __name__ == "__main__":
     x = add_intercept_column(np.array([[1, 2], [3, 4]]))
-
     assert(x.shape == (2, 3))
+
+    ohe = one_hot_encoding(np.array([3]))
+    assert(np.array_equal(ohe, np.array([[0, 0, 0, 1]])))
     pass
